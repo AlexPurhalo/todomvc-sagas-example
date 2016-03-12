@@ -13,7 +13,7 @@ const todo = (state, action) => {
         state, 
         { text: action.text }
       )
-    case ActionTypes.COMPLETE_TODO:
+    case ActionTypes.COMPLETE_TODO_REQUESTED:
       return Object.assign({}, 
         state, 
         { completed: !state.completed }
@@ -47,7 +47,7 @@ const todos = (state = initialState, action) => {
           todo(t, action) :
           t
       )
-    case ActionTypes.COMPLETE_TODO:
+    case ActionTypes.COMPLETE_TODO_REQUESTED:
       return state.map(t =>
         t.id === action.id ?
           todo(t, action) :
