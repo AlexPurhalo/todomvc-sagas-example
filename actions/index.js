@@ -23,7 +23,7 @@ export const deleteTodo = (id) => {
 
 export const editTodo = (id, text) => {
   return { 
-    type: ActionTypes.EDIT_TODO, 
+    type: ActionTypes.EDIT_TODO_REQUESTED, 
     id, 
     text 
   }
