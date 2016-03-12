@@ -111,6 +111,7 @@ export function* completeTodo(action) {
 }
 
 export function* completeAllTodos(action) {
+  // todo pass all todos
   const { id, completed: c } = action
 
   try {
@@ -133,6 +134,28 @@ export function* completeAllTodos(action) {
   }
 }
 
+export function* clearCompletedTodos(action) {
+  // todo pass all todos
+  try {
+    const todo = yield call(
+      api, 
+      '/clear-completed', 
+      { 
+        method: 'POST', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: ''
+      }
+    )
+
+    yield put({ type: ActionTypes.CLEAR_COMPLETED_SUCCEEDED })
+  } catch (e) {
+    yield put({ type: ActionTypes.CLEAR_COMPLETED_FAILED })
+  }
+}
+
 function *watchMany() {
   yield [
     takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo),
@@ -140,6 +163,7 @@ function *watchMany() {
     takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo),
     takeLatest(ActionTypes.COMPLETE_TODO_REQUESTED, completeTodo),
     takeLatest(ActionTypes.COMPLETE_ALL_REQUESTED, completeAllTodos),
+    takeLatest(ActionTypes.CLEAR_COMPLETED_REQUESTED, clearCompletedTodos),
   ]
 }
 
