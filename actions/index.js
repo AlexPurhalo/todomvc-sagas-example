@@ -40,7 +40,7 @@ export const completeTodo = (id, completed) => {
 
 export const clearCompleted = () => {
   return {
-    type: ActionTypes.CLEAR_COMPLETED
+    type: ActionTypes.CLEAR_COMPLETED_REQUESTED
   }
 }
 
