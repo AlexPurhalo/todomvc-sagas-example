@@ -37,7 +37,7 @@ const todos = (state = initialState, action) => {
         ...state,
         todo(state, action)
       ]
-    case ActionTypes.DELETE_TODO:
+    case ActionTypes.DELETE_TODO_SUCCEEDED:
       return state.filter(todo =>
         todo.id !== action.id
       )
