@@ -20,7 +20,7 @@ const TodoList = ({
         <Todo
           key={todo.id}
           todo={todo}
-          deleteTodo={() => deleteTodo(todo.id)}
+          deleteTodo={() => deleteTodo(todo.id, todo.text)}
           editTodo={(text) => editTodo(todo.id, text)}
           completeTodo={() => completeTodo(todo.id)}
         />
