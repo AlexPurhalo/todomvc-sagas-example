@@ -45,6 +45,16 @@ app.post("/complete-todo", function(req, res) {
   })
 })
 
+app.post("/complete-all", function(req, res) {
+  db.find({ }, function (err, docs) {
+    const areAllMarked = docs.every(todo => todo.completed)
+
+    db.update({ }, {completed: !areAllMarked}, { returnUpdatedDocs: true }, function (err, numAffected, doc, upsert) { 
+      res.send({ })
+    })
+  })
+})
+
 app.post("/delete-todo", function(req, res) {
   db.remove({ _id: req.body.id }, function (err, numRemoved) {
     res.send({ })
