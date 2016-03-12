@@ -55,6 +55,12 @@ app.post("/complete-all", function(req, res) {
   })
 })
 
+app.post("/clear-completed", function(req, res) {
+  db.remove({ completed: true }, { multi: true }, function (err, numRemoved) {
+    res.send(numRemoved);
+  });
+})
+
 app.post("/delete-todo", function(req, res) {
   db.remove({ _id: req.body.id }, function (err, numRemoved) {
     res.send({ })
