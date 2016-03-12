@@ -2,10 +2,19 @@ import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
 import rootReducer from '../reducers'
-import { addSaga, editSaga, addTodo, editTodo } from '../sagas'
+import { 
+  addSaga, 
+  deleteSaga,
+  editSaga, 
+  addTodo,
+  deleteTodo,
+  editTodo 
+} from '../sagas'
 
 export default function configureStore(initialState) {
-  const sagaMiddleware = createSagaMiddleware(...[ addSaga, editSaga, addTodo, editTodo ])
+  const sagaMiddleware = createSagaMiddleware(
+    ...[ addSaga, deleteSaga, editSaga, addTodo, deleteTodo, editTodo ]
+  )
 
   const store = createStore(
     rootReducer, 
