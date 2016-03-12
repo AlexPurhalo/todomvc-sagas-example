@@ -1,5 +1,5 @@
-import { takeEvery, takeLatest } from 'redux-saga'
-import { call, put, take } from 'redux-saga/effects'
+import { takeLatest } from 'redux-saga'
+import { call, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
 
 export function* addTodos(action) {
@@ -34,10 +34,10 @@ export function* mySaga() {
 
 function api(url, opts) {
   return fetch(url, opts)
-    .then(function(resp) {
+    .then(function (resp) {
       return resp.json()
     })
-    .then(function(resp) {
+    .then(function (resp) {
       return resp
     })
 }

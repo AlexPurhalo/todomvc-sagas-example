@@ -5,7 +5,7 @@ import rootReducer from '../reducers'
 import { mySaga, addTodos } from '../sagas'
 
 export default function configureStore(initialState) {
-  const sagaMiddleware = createSagaMiddleware(...[mySaga, addTodos])
+  const sagaMiddleware = createSagaMiddleware(...[ mySaga, addTodos ])
 
   const store = createStore(
     rootReducer, 
