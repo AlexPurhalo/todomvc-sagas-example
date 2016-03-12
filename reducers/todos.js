@@ -53,7 +53,7 @@ const todos = (state = initialState, action) => {
           todo(t, action) :
           t
       )
-    case ActionTypes.CLEAR_COMPLETED:
+    case ActionTypes.CLEAR_COMPLETED_REQUESTED:
       return state.filter(todo => !todo.completed)
     case ActionTypes.COMPLETE_ALL_REQUESTED:
       const areAllMarked = state.every(todo => todo.completed)
