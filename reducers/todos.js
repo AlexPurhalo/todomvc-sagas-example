@@ -2,10 +2,10 @@ import * as ActionTypes from '../constants/ActionTypes'
 
 const todo = (state, action) => {
   switch (action.type) {
-    case ActionTypes.ADD_TODO:
+    case ActionTypes.ADD_TODO_SUCCEEDED:
       return {
-        id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-        text: action.text,
+        id: action.payload._id,
+        text: action.payload.text,
         completed: false
       }
     case ActionTypes.EDIT_TODO:
@@ -28,11 +28,11 @@ const todo = (state, action) => {
   }
 }
 
-const initialState = [ { id: 0, text: 'Use Redux', completed: false } ]
+const initialState = [ ]
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.ADD_TODO:
+    case ActionTypes.ADD_TODO_SUCCEEDED:
       return [
         ...state,
         todo(state, action)
