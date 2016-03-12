@@ -26,11 +26,9 @@ app.get("/", function(req, res) {
 
 app.post("/todos", function(req, res) {
   console.log('received todo:', req.body.text)
-  // save it into Datastore and send back the incremented id
-  // Find all documents in the collection
 
   db.insert([{ text: req.body.text }], function (err, newDocs) {
-    res.send(newDocs)
+    res.send(newDocs[0])
   });
 })
 
