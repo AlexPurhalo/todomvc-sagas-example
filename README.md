@@ -1,10 +1,8 @@
 # todomvc-sagas-crud-example
 
-This is an example of a todomvc crud application using [redux](https://github.com/reactjs/redux) and [redux-sagas](https://github.com/yelouafi/redux-saga)
+This is an example of a CRUD TodoMVC app which uses [redux](https://github.com/reactjs/redux) and [redux-sagas](https://github.com/yelouafi/redux-saga) to do the asynchronous fetching
 
-It makes calls to the express server endpoints for the typical use cases: ```[ ADD_TODO_REQUESTED, /add-todo ]```, ```[ DELETE_TODO_REQUESTED, /delete-todo ]```, ```[ COMPLETE_TODO_REQUESTED, /complete-todo ]``` etc.
-
-It is using an in-memory database to store the information using [nedb](https://github.com/louischatriot/nedb)
+On the server it is using [nedb](https://github.com/louischatriot/nedb) which is a lighweight, npm/node friendly mongo-like data store.
 
 ## Install and Run
 
