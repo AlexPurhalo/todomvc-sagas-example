@@ -46,7 +46,6 @@ export const clearCompleted = () => {
 
 export const completeAll = () => {
   return { 
-    type: ActionTypes.COMPLETE_ALL 
+    type: ActionTypes.COMPLETE_ALL_REQUESTED
   }
 }
-
