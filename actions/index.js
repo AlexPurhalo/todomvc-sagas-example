@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/ActionTypes'
 
 export const addTodo = (text) => {
   return {
-    type: 'ADD_TODO_REQUESTED',
+    type: ActionTypes.ADD_TODO_REQUESTED,
     text
   }
 }
