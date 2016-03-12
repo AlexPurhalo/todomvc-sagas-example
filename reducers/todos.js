@@ -4,8 +4,8 @@ const todo = (state, action) => {
   switch (action.type) {
     case ActionTypes.ADD_TODO_SUCCEEDED:
       return {
-        id: action.payload._id,
-        text: action.payload.text,
+        id: action.id,
+        text: action.text,
         completed: false
       }
     case ActionTypes.EDIT_TODO_REQUESTED:
