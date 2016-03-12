@@ -36,8 +36,6 @@ export function* editTodo(action) {
   // why does this get called on init?
   if (!id) return
 
-  yield put({ type: ActionTypes.EDIT_TODO_SUCCEEDED, payload: { id, text } })
-
   try {
     const todo = yield call(
       api, 
@@ -54,7 +52,33 @@ export function* editTodo(action) {
 
     yield put({ type: ActionTypes.EDIT_TODO_SUCCEEDED, payload: todo })
   } catch (e) {
-    yield put({ type: ActionTypes.EDIT_TODO_FAILED, message: e.message })
+    yield put({ type: ActionTypes.EDIT_TODO_FAILED, id, text })
+  }
+}
+
+export function* deleteTodo(action) {
+  const { id, text } = action
+
+  // why does this get called on init?
+  if (!id) return
+
+  try {
+    const todo = yield call(
+      api, 
+      '/delete-todo', 
+      { 
+        method: 'POST', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id }) 
+      }
+    )
+
+    yield put({ type: ActionTypes.DELETE_TODO_SUCCEEDED, id })
+  } catch (e) {
+    yield put({ type: ActionTypes.DELETE_TODO_FAILED, id, text })
   }
 }
 
@@ -64,6 +88,10 @@ export function* addSaga() {
 
 export function* editSaga() {
   yield* takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo)
+}
+
+export function* deleteSaga() {
+  yield* takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo)
 }
 
 function api(url, opts) {
