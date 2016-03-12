@@ -18,7 +18,7 @@ const todo = (state, action) => {
         state, 
         { completed: !state.completed }
       )
-    case ActionTypes.COMPLETE_ALL:
+    case ActionTypes.COMPLETE_ALL_REQUESTED:
       return Object.assign({},
         state,
         { completed: action.completed }
@@ -55,7 +55,7 @@ const todos = (state = initialState, action) => {
       )
     case ActionTypes.CLEAR_COMPLETED:
       return state.filter(todo => !todo.completed)
-    case ActionTypes.COMPLETE_ALL:
+    case ActionTypes.COMPLETE_ALL_REQUESTED:
       const areAllMarked = state.every(todo => todo.completed)
       return state.map(t => 
         todo(
