@@ -14,10 +14,11 @@ export const setVisibilityFilter = (filter) => {
   }
 }
 
-export const deleteTodo = (id) => {
+export const deleteTodo = (id, text) => {
   return {
-    type: ActionTypes.DELETE_TODO,
-    id
+    type: ActionTypes.DELETE_TODO_REQUESTED,
+    id,
+    text
   }
 }
 
