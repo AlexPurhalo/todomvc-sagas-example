@@ -8,10 +8,10 @@ const todo = (state, action) => {
         text: action.payload.text,
         completed: false
       }
-    case ActionTypes.EDIT_TODO_SUCCEEDED:
+    case ActionTypes.EDIT_TODO_REQUESTED:
       return Object.assign({}, 
         state, 
-        { text: action.payload.text }
+        { text: action.text }
       )
     case ActionTypes.COMPLETE_TODO:
       return Object.assign({}, 
@@ -31,7 +31,6 @@ const todo = (state, action) => {
 const initialState = [ ]
 
 const todos = (state = initialState, action) => {
-  console.log('hey! :)', action)
   switch (action.type) {
     case ActionTypes.ADD_TODO_SUCCEEDED:
       return [
@@ -42,9 +41,9 @@ const todos = (state = initialState, action) => {
       return state.filter(todo =>
         todo.id !== action.id
       )
-    case ActionTypes.EDIT_TODO_SUCCEEDED:
+    case ActionTypes.EDIT_TODO_REQUESTED:
       return state.map(t =>
-        t.id === action.payload.id ?
+        t.id === action.id ?
           todo(t, action) :
           t
       )

@@ -31,10 +31,10 @@ export function* addTodo(action) {
 export function* editTodo(action) {
   const { id, text } = action
 
-  console.log('editing??', action)
-
   // why does this get called on init?
   if (!id) return
+
+  yield put({ type: ActionTypes.EDIT_TODO_SUCCEEDED, payload: { id, text } })
 
   try {
     const todo = yield call(
