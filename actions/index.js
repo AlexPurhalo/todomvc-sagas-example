@@ -30,10 +30,11 @@ export const editTodo = (id, text) => {
   }
 }
 
-export const completeTodo = (id) => {
+export const completeTodo = (id, completed) => {
   return { 
-    type: ActionTypes.COMPLETE_TODO, 
-    id 
+    type: ActionTypes.COMPLETE_TODO_REQUESTED, 
+    id,
+    completed
   }
 }
 
