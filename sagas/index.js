@@ -46,7 +46,7 @@ export function* editTodo(action) {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id: id, text: text }) 
+        body: JSON.stringify({ id, text }) 
       }
     )
 
@@ -72,7 +72,7 @@ export function* deleteTodo(action) {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id: id }) 
+        body: JSON.stringify({ id }) 
       }
     )
 
@@ -82,11 +82,40 @@ export function* deleteTodo(action) {
   }
 }
 
+export function* completeTodo(action) {
+  const { id, completed: c } = action
+
+  // why does this get called on init?
+  if (!id) return
+
+  try {
+    const todo = yield call(
+      api, 
+      '/complete-todo', 
+      { 
+        method: 'POST', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id }) 
+      }
+    )
+
+    const { completed } = todo
+
+    yield put({ type: ActionTypes.COMPLETE_TODO_SUCCEEDED, id, completed })
+  } catch (e) {
+    yield put({ type: ActionTypes.COMPLETE_TODO_FAILED, id, c })
+  }
+}
+
 function *watchMany() {
   yield [
     takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo),
     takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo),
-    takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo)
+    takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo),
+    takeLatest(ActionTypes.COMPLETE_TODO_REQUESTED, completeTodo),
   ]
 }
 
