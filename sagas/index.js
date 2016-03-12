@@ -82,16 +82,12 @@ export function* deleteTodo(action) {
   }
 }
 
-export function* addSaga() {
-  yield* takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo)
-}
-
-export function* editSaga() {
-  yield* takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo)
-}
-
-export function* deleteSaga() {
-  yield* takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo)
+function *watchMany() {
+  yield [
+    takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo),
+    takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo),
+    takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo)
+  ]
 }
 
 function api(url, opts) {
@@ -104,4 +100,4 @@ function api(url, opts) {
     })
 }
 
-export default [ addTodo, editTodo, deleteTodo, addSaga, editSaga, deleteSaga ]
+export default [ addTodo, editTodo, deleteTodo, watchMany ]
