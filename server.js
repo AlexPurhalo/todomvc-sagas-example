@@ -41,6 +41,14 @@ app.post("/edit-todo", function(req, res) {
   });
 })
 
+app.post("/delete-todo", function(req, res) {
+  console.log('received delete edit request:', req.body.id)
+
+  db.remove({ _id: req.body.id }, function (err, numRemoved) {
+    res.send({ })
+  });
+})
+
 app.listen(port, function(error) {
   if (error) {
     console.error(error)
