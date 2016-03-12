@@ -37,6 +37,14 @@ app.post("/edit-todo", function(req, res) {
   });
 })
 
+app.post("/complete-todo", function(req, res) {
+  db.findOne({ _id: req.body.id }, function (err, doc) {
+    db.update({ _id: req.body.id }, {completed: !doc.completed}, { returnUpdatedDocs: true },  function (err, numAffected, doc, upsert) { 
+      res.send({ text: doc.text, id: doc._id, completed: doc.completed })
+    })
+  })
+})
+
 app.post("/delete-todo", function(req, res) {
   db.remove({ _id: req.body.id }, function (err, numRemoved) {
     res.send({ })
