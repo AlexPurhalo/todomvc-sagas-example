@@ -1,8 +1,12 @@
 import { takeEvery, takeLatest } from 'redux-saga'
 import { call, put, take } from 'redux-saga/effects'
+import * as ActionTypes from '../constants/ActionTypes'
 
 export function* addTodos(action) {
   const { text } = action
+
+  // why does this get called on init?
+  if (!text) return
 
   try {
     const todo = yield call(
@@ -18,22 +22,22 @@ export function* addTodos(action) {
       }
     )
 
-    yield put({ type: "ADD_TODO_SUCCEEDED", payload: todo });
+    yield put({ type: ActionTypes.ADD_TODO_SUCCEEDED, payload: todo })
   } catch (e) {
-    yield put({ type: "ADD_TODO_FAILED", message: e.message });
+    yield put({ type: ActionTypes.ADD_TODO_FAILED, message: e.message })
   }
 }
 
 export function* mySaga() {
-  yield* takeLatest("ADD_TODO_REQUESTED", addTodos);
+  yield* takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodos)
 }
 
 function api(url, opts) {
   return fetch(url, opts)
     .then(function(resp) {
-      return resp.json();
+      return resp.json()
     })
     .then(function(resp) {
-      return resp;
-    });
+      return resp
+    })
 }
