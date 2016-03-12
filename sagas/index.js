@@ -103,3 +103,5 @@ function api(url, opts) {
       return resp
     })
 }
+
+export default [ addTodo, editTodo, deleteTodo, addSaga, editSaga, deleteSaga ]
