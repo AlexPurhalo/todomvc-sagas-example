@@ -1,5 +1,5 @@
 {
-  "name": "todomvc-sagas-crud",
+  "name": "todomvc-sagas-crud-example",
   "version": "0.0.0",
   "description": "TodoMVC Redux Sagas Example",
   "scripts": {
