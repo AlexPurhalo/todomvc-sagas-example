@@ -110,12 +110,36 @@ export function* completeTodo(action) {
   }
 }
 
+export function* completeAllTodos(action) {
+  const { id, completed: c } = action
+
+  try {
+    const todo = yield call(
+      api, 
+      '/complete-all', 
+      { 
+        method: 'POST', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: ''
+      }
+    )
+
+    yield put({ type: ActionTypes.COMPLETE_ALL_SUCCEEDED })
+  } catch (e) {
+    yield put({ type: ActionTypes.COMPLETE_TODO_FAILED, id, c })
+  }
+}
+
 function *watchMany() {
   yield [
     takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo),
     takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo),
     takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo),
     takeLatest(ActionTypes.COMPLETE_TODO_REQUESTED, completeTodo),
+    takeLatest(ActionTypes.COMPLETE_ALL_REQUESTED, completeAllTodos),
   ]
 }
 
