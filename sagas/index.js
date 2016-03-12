@@ -2,7 +2,7 @@ import { takeLatest } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
 
-export function* addTodos(action) {
+export function* addTodo(action) {
   const { text } = action
 
   // why does this get called on init?
@@ -11,7 +11,7 @@ export function* addTodos(action) {
   try {
     const todo = yield call(
       api, 
-      '/todos', 
+      '/add-todo', 
       { 
         method: 'POST', 
         headers: {
@@ -28,8 +28,40 @@ export function* addTodos(action) {
   }
 }
 
-export function* mySaga() {
-  yield* takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodos)
+export function* editTodo(action) {
+  const { id, text } = action
+
+  console.log('editing??', action)
+
+  // why does this get called on init?
+  if (!id) return
+
+  try {
+    const todo = yield call(
+      api, 
+      '/edit-todo', 
+      { 
+        method: 'POST', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id, text: text }) 
+      }
+    )
+
+    yield put({ type: ActionTypes.EDIT_TODO_SUCCEEDED, payload: todo })
+  } catch (e) {
+    yield put({ type: ActionTypes.EDIT_TODO_FAILED, message: e.message })
+  }
+}
+
+export function* addSaga() {
+  yield* takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo)
+}
+
+export function* editSaga() {
+  yield* takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo)
 }
 
 function api(url, opts) {
