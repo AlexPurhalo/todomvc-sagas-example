@@ -25,16 +25,12 @@ app.get("/", function(req, res) {
 })
 
 app.post("/add-todo", function(req, res) {
-  console.log('received todo:', req.body.text)
-
   db.insert([{ text: req.body.text }], function (err, newDocs) {
     res.send(newDocs[0])
   });
 })
 
 app.post("/edit-todo", function(req, res) {
-  console.log('received todo edit request:', req.body.id, req.body.text)
-
   db.update({ _id: req.body.id }, {text: req.body.text}, { returnUpdatedDocs: true },  function (err, numAffected, doc, upsert) {
     
     res.send({ text: doc.text, id: doc._id })
@@ -42,8 +38,6 @@ app.post("/edit-todo", function(req, res) {
 })
 
 app.post("/delete-todo", function(req, res) {
-  console.log('received delete edit request:', req.body.id)
-
   db.remove({ _id: req.body.id }, function (err, numRemoved) {
     res.send({ })
   });
