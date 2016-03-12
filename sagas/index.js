@@ -3,10 +3,10 @@ import { call, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
 
 export function* addTodo(action) {
-  const { text } = action
+  const { text: t } = action
 
   // why does this get called on init?
-  if (!text) return
+  if (!t) return
 
   try {
     const todo = yield call(
@@ -18,11 +18,13 @@ export function* addTodo(action) {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ text: text }) 
+        body: JSON.stringify({ text: t }) 
       }
     )
 
-    yield put({ type: ActionTypes.ADD_TODO_SUCCEEDED, payload: todo })
+    const { _id: id, text } = todo
+
+    yield put({ type: ActionTypes.ADD_TODO_SUCCEEDED, id, text })
   } catch (e) {
     yield put({ type: ActionTypes.ADD_TODO_FAILED, message: e.message })
   }
