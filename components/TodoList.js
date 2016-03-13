@@ -1,33 +1,48 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Todo from './Todo'
 
-const TodoList = ({ 
-  completedCount, 
-  todos, 
-  deleteTodo, 
-  editTodo, 
-  completeTodo,
-  completeAll 
-}) => (
-  <section className="main">
-    <input className="toggle-all"
-           type="checkbox"
-           checked={completedCount === todos.length}
-           onChange={() => completeAll()} />
+class TodoList extends Component {
 
-    <ul className="todo-list">
-      {todos.map(todo =>
-        <Todo
-          key={todo.id}
-          todo={todo}
-          deleteTodo={() => deleteTodo(todo.id, todo.text)}
-          editTodo={(text) => editTodo(todo.id, text)}
-          completeTodo={() => completeTodo(todo.id)}
-        />
-      )}
-    </ul>
-  </section>
-)
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.fetchTodos()
+  }
+
+  render() {
+    const {
+      completedCount, 
+      todos, 
+      deleteTodo, 
+      editTodo, 
+      completeTodo,
+      completeAll 
+    } = this.props;
+
+    return (
+      <section className="main">
+        <input className="toggle-all"
+               type="checkbox"
+               checked={completedCount === todos.length}
+               onChange={() => completeAll()} />
+
+        <ul className="todo-list">
+          {todos.map(todo =>
+            <Todo
+              key={todo.id}
+              todo={todo}
+              deleteTodo={() => deleteTodo(todo.id, todo.text)}
+              editTodo={(text) => editTodo(todo.id, text)}
+              completeTodo={() => completeTodo(todo.id, todo.completed)}
+            />
+          )}
+        </ul>
+      </section>
+    )
+  }
+}
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.shape({
