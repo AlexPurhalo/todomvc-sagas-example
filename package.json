@@ -1,5 +1,5 @@
 {
-  "name": "todomvc-sagas-crud-example",
+  "name": "todomvc-sagas-example",
   "version": "0.0.0",
   "description": "TodoMVC Redux Sagas Example",
   "scripts": {
@@ -10,11 +10,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mjw56/todomvc-sagas-crud-example.git"
+    "url": "https://github.com/mjw56/todomvc-sagas-example.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mjw56/todomvc-sagas-crud-example/issues"
+    "url": "https://github.com/mjw56/todomvc-sagas-example/issues"
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
