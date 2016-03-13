@@ -2,7 +2,7 @@ import { takeLatest } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
 import clearCompletedTodos from './clear-completed'
-import fetchTodos from './fetch-todos'
+import fetchTodos from './fetch-all'
 
 export function* addTodo(action) {
   const { text: t } = action
@@ -159,4 +159,4 @@ function api(url, opts) {
     })
 }
 
-export default [ addTodo, editTodo, deleteTodo, watchMany ]
+export default [ watchMany ]
