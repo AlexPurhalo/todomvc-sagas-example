@@ -13,8 +13,9 @@ describe('todos reducer', () => {
   it('should handle ADD_TODO', () => {
     expect(
       todos([], {
-        type: ActionTypes.ADD_TODO,
-        text: 'Run the tests'
+        type: ActionTypes.ADD_TODO_SUCCEEDED,
+        text: 'Run the tests',
+        id: 0
       })
     ).toEqual([
       {
@@ -32,7 +33,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: ActionTypes.ADD_TODO,
+        type: ActionTypes.ADD_TODO_SUCCEEDED,
         text: 'Use Redux',
         id: 1
       })
@@ -60,7 +61,7 @@ describe('todos reducer', () => {
           id: 1
         }
       ], {
-        type: ActionTypes.ADD_TODO,
+        type: ActionTypes.ADD_TODO_SUCCEEDED,
         text: 'Fix the tests',
         id: 2
       })
@@ -94,7 +95,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: ActionTypes.DELETE_TODO,
+        type: ActionTypes.DELETE_TODO_REQUESTED,
         id: 1
       })
     ).toEqual([
@@ -119,7 +120,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: ActionTypes.EDIT_TODO,
+        type: ActionTypes.EDIT_TODO_REQUESTED,
         id: 0,
         text: 'Use Redux!'
       })
@@ -150,7 +151,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: ActionTypes.COMPLETE_TODO,
+        type: ActionTypes.COMPLETE_TODO_REQUESTED,
         id: 1
       })
     ).toEqual([
@@ -180,7 +181,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: ActionTypes.CLEAR_COMPLETED
+        type: ActionTypes.CLEAR_COMPLETED_REQUESTED
       })
     ).toEqual([])
   })
@@ -198,7 +199,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: ActionTypes.COMPLETE_ALL
+        type: ActionTypes.COMPLETE_ALL_REQUESTED
       })
     ).toEqual([
       {
@@ -224,7 +225,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: ActionTypes.COMPLETE_ALL
+        type: ActionTypes.COMPLETE_ALL_REQUESTED
       })
     ).toEqual([
       {
@@ -250,7 +251,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: ActionTypes.COMPLETE_ALL
+        type: ActionTypes.COMPLETE_ALL_REQUESTED
       })
     ).toEqual([
       {
