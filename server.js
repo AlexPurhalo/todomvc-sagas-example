@@ -7,7 +7,6 @@ var Datastore = require('nedb')
 var db = new Datastore()
 var bodyParser = require('body-parser')
 
-
 var app = new express()
 var port = 3000
 
@@ -18,10 +17,19 @@ app.use(webpackHotMiddleware(compiler))
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
+
+// insert first doc to data store
+db.insert([{ text: 'Get to the choppah!' }]) 
 
 app.get("/", function(req, res) {
   res.sendFile(__dirname + '/index.html')
+})
+
+app.post("/fetch-todos", function(req, res) {
+  db.find({}, function(err, docs) {
+    res.send(docs.map(function(doc) { return { id: doc._id, text: doc.text }}))
+  })
 })
 
 app.post("/add-todo", function(req, res) {
