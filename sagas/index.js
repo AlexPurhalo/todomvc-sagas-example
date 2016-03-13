@@ -2,27 +2,7 @@ import { takeLatest } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
 import clearCompletedTodos from './clear-completed'
-
-export function* fetchTodos(action) {
-  try {
-    const todos = yield call(
-      api, 
-      '/fetch-todos', 
-      { 
-        method: 'POST', 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: '' 
-      }
-    )
-
-    yield put({ type: ActionTypes.FETCH_TODOS_SUCCEEDED, todos })
-  } catch (e) {
-    yield put({ type: ActionTypes.FETCH_TODOS_FAILED, message: e.message })
-  }
-}
+import fetchTodos from './fetch-todos'
 
 export function* addTodo(action) {
   const { text: t } = action
