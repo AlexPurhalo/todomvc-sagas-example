@@ -3,9 +3,9 @@ import * as actions from '../../actions'
 import * as ActionTypes from '../../constants/ActionTypes'
 
 describe('todo actions', () => {
-  it('addTodo should create ADD_TODO action', () => {
+  it('addTodo should create ADD_TODO_REQUESTED action', () => {
     expect(actions.addTodo('Use Redux')).toEqual({
-      type: ActionTypes.ADD_TODO,
+      type: ActionTypes.ADD_TODO_REQUESTED,
       text: 'Use Redux'
     })
   })
@@ -17,37 +17,39 @@ describe('todo actions', () => {
     })
   })
 
-  it('deleteTodo should create DELETE_TODO action', () => {
-    expect(actions.deleteTodo(1)).toEqual({
-      type: ActionTypes.DELETE_TODO,
-      id: 1
-    })
-  })
-
-  it('editTodo should create EDIT_TODO action', () => {
-    expect(actions.editTodo(1, 'Use Redux')).toEqual({
-      type: ActionTypes.EDIT_TODO,
+  it('deleteTodo should create DELETE_TODO_REQUESTED action', () => {
+    expect(actions.deleteTodo(1, 'Use Redux')).toEqual({
+      type: ActionTypes.DELETE_TODO_REQUESTED,
       id: 1,
       text: 'Use Redux'
     })
   })
 
-  it('completeTodo should create COMPLETE_TODO action', () => {
-    expect(actions.completeTodo(1)).toEqual({
-      type: ActionTypes.COMPLETE_TODO,
-      id: 1
+  it('editTodo should create EDIT_TODO_REQUESTED action', () => {
+    expect(actions.editTodo(1, 'Use Redux')).toEqual({
+      type: ActionTypes.EDIT_TODO_REQUESTED,
+      id: 1,
+      text: 'Use Redux'
     })
   })
 
-  it('clearCompleted should create CLEAR_COMPLETED action', () => {
+  it('completeTodo should create COMPLETE_TODO_REQUESTED action', () => {
+    expect(actions.completeTodo(1, false)).toEqual({
+      type: ActionTypes.COMPLETE_TODO_REQUESTED,
+      id: 1,
+      completed: false
+    })
+  })
+
+  it('clearCompleted should create CLEAR_COMPLETED_REQUESTED action', () => {
     expect(actions.clearCompleted()).toEqual({
-      type: ActionTypes.CLEAR_COMPLETED
+      type: ActionTypes.CLEAR_COMPLETED_REQUESTED
     })
   })
 
-  it('completeAll should create COMPLETE_ALL action', () => {
+  it('completeAll should create COMPLETE_ALL_REQUESTED action', () => {
     expect(actions.completeAll()).toEqual({
-      type: ActionTypes.COMPLETE_ALL
+      type: ActionTypes.COMPLETE_ALL_REQUESTED
     })
   })
 })
