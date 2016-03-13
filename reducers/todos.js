@@ -2,6 +2,12 @@ import * as ActionTypes from '../constants/ActionTypes'
 
 const todo = (state, action) => {
   switch (action.type) {
+    case ActionTypes.FETCH_TODOS_SUCCEEDED:
+      return {
+        id: state.id,
+        text: state.text,
+        completed: false
+      }
     case ActionTypes.ADD_TODO_SUCCEEDED:
       return {
         id: action.id,
@@ -32,6 +38,10 @@ const initialState = [ ]
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.FETCH_TODOS_SUCCEEDED:
+      return action.todos.map(t =>
+          todo(t, action)
+      )
     case ActionTypes.ADD_TODO_SUCCEEDED:
       return [
         ...state,
