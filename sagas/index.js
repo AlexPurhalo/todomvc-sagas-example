@@ -2,6 +2,27 @@ import { takeLatest } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
 
+export function* fetchTodos(action) {
+  try {
+    const todos = yield call(
+      api, 
+      '/fetch-todos', 
+      { 
+        method: 'POST', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: '' 
+      }
+    )
+
+    yield put({ type: ActionTypes.FETCH_TODOS_SUCCEEDED, todos })
+  } catch (e) {
+    yield put({ type: ActionTypes.FETCH_TODOS_FAILED, message: e.message })
+  }
+}
+
 export function* addTodo(action) {
   const { text: t } = action
 
@@ -160,10 +181,11 @@ function *watchMany() {
   yield [
     takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo),
     takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo),
+    takeLatest(ActionTypes.FETCH_TODOS_REQUESTED, fetchTodos),
     takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo),
     takeLatest(ActionTypes.COMPLETE_TODO_REQUESTED, completeTodo),
     takeLatest(ActionTypes.COMPLETE_ALL_REQUESTED, completeAllTodos),
-    takeLatest(ActionTypes.CLEAR_COMPLETED_REQUESTED, clearCompletedTodos),
+    takeLatest(ActionTypes.CLEAR_COMPLETED_REQUESTED, clearCompletedTodos)
   ]
 }
 
