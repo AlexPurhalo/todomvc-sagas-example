@@ -1,6 +1,7 @@
 import { takeLatest } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
+import clearCompletedTodos from './clear-completed'
 
 export function* fetchTodos(action) {
   try {
@@ -155,27 +156,6 @@ export function* completeAllTodos(action) {
   }
 }
 
-export function* clearCompletedTodos(action) {
-  // todo pass all todos
-  try {
-    const todo = yield call(
-      api, 
-      '/clear-completed', 
-      { 
-        method: 'POST', 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: ''
-      }
-    )
-
-    yield put({ type: ActionTypes.CLEAR_COMPLETED_SUCCEEDED })
-  } catch (e) {
-    yield put({ type: ActionTypes.CLEAR_COMPLETED_FAILED })
-  }
-}
 
 function *watchMany() {
   yield [
