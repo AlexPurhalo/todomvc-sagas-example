@@ -1,5 +1,10 @@
 import * as ActionTypes from '../constants/ActionTypes'
 
+export const fetchTodos = () => {
+  return {
+    type: ActionTypes.FETCH_TODOS_REQUESTED
+  }
+}
 export const addTodo = (text) => {
   return {
     type: ActionTypes.ADD_TODO_REQUESTED,
