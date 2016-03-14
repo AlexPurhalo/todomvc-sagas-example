@@ -1,9 +1,9 @@
 import * as ActionTypes from '../constants/ActionTypes'
 import api from './api'
-import { put } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
+import { takeLatest } from 'redux-saga'
 
-export default function* clearCompletedTodos(action) {
-  // todo pass all todos
+function* clearCompletedTodos(action) {
   try {
     const todo = yield call(
       api, 
@@ -22,4 +22,8 @@ export default function* clearCompletedTodos(action) {
   } catch (e) {
     yield put({ type: ActionTypes.CLEAR_COMPLETED_FAILED })
   }
+}
+
+export default function* watchClearCompletedTodos() {
+  yield* takeLatest(ActionTypes.CLEAR_COMPLETED_REQUESTED, clearCompletedTodos)
 }

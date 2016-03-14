@@ -3,6 +3,7 @@ import { call, fork, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
 import watchAddTodo from './add-todo'
 import watchFetchTodos from './fetch-todos'
+import watchClearCompletedTodos from './clear-completed'
 
 export function* editTodo(action) {
   const { id, text } = action
@@ -108,28 +109,6 @@ export function* completeAllTodos(action) {
   }
 }
 
-export function* clearCompletedTodos(action) {
-  // todo pass all todos
-  try {
-    const todo = yield call(
-      api, 
-      '/clear-completed', 
-      { 
-        method: 'POST', 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: ''
-      }
-    )
-
-    yield put({ type: ActionTypes.CLEAR_COMPLETED_SUCCEEDED })
-  } catch (e) {
-    yield put({ type: ActionTypes.CLEAR_COMPLETED_FAILED })
-  }
-}
-
 function api(url, opts) {
   return fetch(url, opts)
     .then(function (resp) {
@@ -148,6 +127,6 @@ export default function* watchMany() {
     takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo),
     takeLatest(ActionTypes.COMPLETE_TODO_REQUESTED, completeTodo),
     takeLatest(ActionTypes.COMPLETE_ALL_REQUESTED, completeAllTodos),
-    takeLatest(ActionTypes.CLEAR_COMPLETED_REQUESTED, clearCompletedTodos)
+    fork(watchClearCompletedTodos)
   ]
 }
