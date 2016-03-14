@@ -3,7 +3,7 @@ import api from './api'
 import { call, put } from 'redux-saga/effects'
 import { takeLatest } from 'redux-saga'
 
-export function* deleteTodo(action) {
+function* deleteTodo(action) {
   const { id, text } = action
 
   // why does this get called on init?
