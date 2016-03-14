@@ -6,31 +6,8 @@ import watchEditTodo from './edit-todo'
 import watchDeleteTodo from './delete-todo'
 import watchFetchTodos from './fetch-todos'
 import watchCompleteTodo from './complete-todo'
+import watchCompleteAllTodos from './complete-all-todos'
 import watchClearCompletedTodos from './clear-completed'
-
-export function* completeAllTodos(action) {
-  // todo pass all todos
-  const { id, completed: c } = action
-
-  try {
-    const todo = yield call(
-      api, 
-      '/complete-all', 
-      { 
-        method: 'POST', 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: ''
-      }
-    )
-
-    yield put({ type: ActionTypes.COMPLETE_ALL_SUCCEEDED })
-  } catch (e) {
-    yield put({ type: ActionTypes.COMPLETE_TODO_FAILED, id, c })
-  }
-}
 
 function api(url, opts) {
   return fetch(url, opts)
@@ -49,7 +26,7 @@ export default function* watchMany() {
     fork(watchFetchTodos),
     fork(watchDeleteTodo),
     fork(watchCompleteTodo),
-    takeLatest(ActionTypes.COMPLETE_ALL_REQUESTED, completeAllTodos),
+    fork(watchCompleteAllTodos),
     fork(watchClearCompletedTodos)
   ]
 }
