@@ -1,8 +1,9 @@
 import * as ActionTypes from '../constants/ActionTypes'
 import api from './api'
-import { put } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
+import { takeLatest } from 'redux-saga'
 
-export default function* fetchAllTodos(action) {
+function* fetchAllTodos(action) {
   try {
     const todos = yield call(
       api, 
@@ -21,4 +22,8 @@ export default function* fetchAllTodos(action) {
   } catch (e) {
     yield put({ type: ActionTypes.FETCH_TODOS_FAILED, message: e.message })
   }
+}
+
+export default function* watchFetchTodos() {
+  yield* takeLatest(ActionTypes.FETCH_TODOS_REQUESTED, fetchAllTodos)
 }

@@ -1,9 +1,8 @@
 import { takeLatest } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { call, fork, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
-import clearCompletedTodos from './clear-completed'
-import fetchTodos from './fetch-all'
-import addTodo from './add-todo'
+import watchAddTodo from './add-todo'
+import watchFetchTodos from './fetch-todos'
 
 export function* editTodo(action) {
   const { id, text } = action
@@ -109,17 +108,26 @@ export function* completeAllTodos(action) {
   }
 }
 
+export function* clearCompletedTodos(action) {
+  // todo pass all todos
+  try {
+    const todo = yield call(
+      api, 
+      '/clear-completed', 
+      { 
+        method: 'POST', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: ''
+      }
+    )
 
-function *watchMany() {
-  yield [
-    takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo),
-    takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo),
-    takeLatest(ActionTypes.FETCH_TODOS_REQUESTED, fetchTodos),
-    takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo),
-    takeLatest(ActionTypes.COMPLETE_TODO_REQUESTED, completeTodo),
-    takeLatest(ActionTypes.COMPLETE_ALL_REQUESTED, completeAllTodos),
-    takeLatest(ActionTypes.CLEAR_COMPLETED_REQUESTED, clearCompletedTodos)
-  ]
+    yield put({ type: ActionTypes.CLEAR_COMPLETED_SUCCEEDED })
+  } catch (e) {
+    yield put({ type: ActionTypes.CLEAR_COMPLETED_FAILED })
+  }
 }
 
 function api(url, opts) {
@@ -132,4 +140,14 @@ function api(url, opts) {
     })
 }
 
-export default [ watchMany ]
+export default function* watchMany() {
+  yield [
+    fork(watchAddTodo),
+    takeLatest(ActionTypes.EDIT_TODO_REQUESTED, editTodo),
+    fork(watchFetchTodos),
+    takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo),
+    takeLatest(ActionTypes.COMPLETE_TODO_REQUESTED, completeTodo),
+    takeLatest(ActionTypes.COMPLETE_ALL_REQUESTED, completeAllTodos),
+    takeLatest(ActionTypes.CLEAR_COMPLETED_REQUESTED, clearCompletedTodos)
+  ]
+}

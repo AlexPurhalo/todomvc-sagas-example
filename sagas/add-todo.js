@@ -1,12 +1,10 @@
 import * as ActionTypes from '../constants/ActionTypes'
 import api from './api'
-import { put } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
+import { takeLatest } from 'redux-saga'
 
-export default function* addTodo(action) {
+function* addTodo(action) {
   const { text: t } = action
-
-  // why does this get called on init?
-  if (!t) return
 
   try {
     const todo = yield call(
@@ -28,4 +26,8 @@ export default function* addTodo(action) {
   } catch (e) {
     yield put({ type: ActionTypes.ADD_TODO_FAILED, message: e.message })
   }
+}
+
+export default function* watchAddTodo() {
+  yield* takeLatest(ActionTypes.ADD_TODO_REQUESTED, addTodo)
 }
