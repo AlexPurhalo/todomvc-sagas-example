@@ -3,34 +3,9 @@ import { call, fork, put } from 'redux-saga/effects'
 import * as ActionTypes from '../constants/ActionTypes'
 import watchAddTodo from './add-todo'
 import watchEditTodo from './edit-todo'
+import watchDeleteTodo from './delete-todo'
 import watchFetchTodos from './fetch-todos'
 import watchClearCompletedTodos from './clear-completed'
-
-export function* deleteTodo(action) {
-  const { id, text } = action
-
-  // why does this get called on init?
-  if (!id) return
-
-  try {
-    const todo = yield call(
-      api, 
-      '/delete-todo', 
-      { 
-        method: 'POST', 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id }) 
-      }
-    )
-
-    yield put({ type: ActionTypes.DELETE_TODO_SUCCEEDED, id })
-  } catch (e) {
-    yield put({ type: ActionTypes.DELETE_TODO_FAILED, id, text })
-  }
-}
 
 export function* completeTodo(action) {
   const { id, completed: c } = action
@@ -99,7 +74,7 @@ export default function* watchMany() {
     fork(watchAddTodo),
     fork(watchEditTodo),
     fork(watchFetchTodos),
-    takeLatest(ActionTypes.DELETE_TODO_REQUESTED, deleteTodo),
+    fork(watchDeleteTodo),
     takeLatest(ActionTypes.COMPLETE_TODO_REQUESTED, completeTodo),
     takeLatest(ActionTypes.COMPLETE_ALL_REQUESTED, completeAllTodos),
     fork(watchClearCompletedTodos)
