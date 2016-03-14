@@ -8,6 +8,7 @@ import watchFetchTodos from './fetch-todos'
 import watchCompleteTodo from './complete-todo'
 import watchCompleteAllTodos from './complete-all-todos'
 import watchClearCompletedTodos from './clear-completed'
+import bootstrap from './bootstrap'
 
 export default function* watchMany() {
   yield [
@@ -17,6 +18,7 @@ export default function* watchMany() {
     fork(watchDeleteTodo),
     fork(watchCompleteTodo),
     fork(watchCompleteAllTodos),
-    fork(watchClearCompletedTodos)
+    fork(watchClearCompletedTodos),
+    fork(bootstrap)
   ]
 }
