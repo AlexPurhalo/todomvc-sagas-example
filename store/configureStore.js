@@ -6,7 +6,7 @@ import sagas from '../sagas'
 
 export default function configureStore(initialState) {
   const sagaMiddleware = createSagaMiddleware(
-    ...sagas
+    sagas
   )
 
   const store = createStore(
