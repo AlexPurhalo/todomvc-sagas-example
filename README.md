@@ -10,6 +10,15 @@ On the server it is using [nedb](https://github.com/louischatriot/nedb) which is
 $ npm install && npm run start
 ```
 
+## TODO
+
+- [ ] handling failed actions in reducers
+- [ ] adding tests for sagas
+
+## CONTRIBUTING
+
+All contributions are welcome.
+
 ## LICENSE
 
 MIT
